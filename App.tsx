@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, StatusBar, ScrollView } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'
+
+
+const alturaStatusBar = StatusBar.currentHeight
 
 export default function App() {
 
   return (
     <View style={ESTILOS.container}>
+      <StatusBar barStyle="dark-content" translucent={true} backgroundColor="#F1F1F1" />
       <Text style={ESTILOS.header}>Cozinha fácil</Text>
       <View style={ESTILOS.form}>
         <Text style={ESTILOS.label}>Insira abaixo os ingredientes</Text>
@@ -33,6 +37,19 @@ export default function App() {
         <Text style={ESTILOS.buttonText}>Gerar receita</Text>
         <MaterialIcons name="travel-explore" size={24} color="#FFF" />
       </TouchableOpacity>
+
+      <ScrollView style={ESTILOS.containerScroll} showsVerticalScrollIndicator={false}>
+
+        <View style={ESTILOS.content}>
+          <Text style={ESTILOS.title}>Produzindo receita...</Text>
+        </View>
+
+        <View style={ESTILOS.content}>
+          <Text style={ESTILOS.title}>Sua receita 👇</Text>
+        </View>
+
+      </ScrollView>
+
     </View>
   );
 }
@@ -47,7 +64,7 @@ const ESTILOS = StyleSheet.create({
   header: {
     fontSize: 32,
     fontWeight: 'bold',
-    paddingTop: 34
+    paddingTop: Platform.OS === 'android' ? alturaStatusBar : 54
   },
   form: {
     backgroundColor: '#FFF',
@@ -84,7 +101,23 @@ const ESTILOS = StyleSheet.create({
     fontSize: 18,
     color: '#FFF',
     fontWeight: 'bold'
+  },
+  content: {
+    backgroundColor: '#FFF',
+    padding: 16,
+    width: '100%',
+    marginTop: 16,
+    borderRadius: 8,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 14
+  },
+  containerScroll: {
+    width: '90%',
+    marginTop: 8,
   }
 
-
-});
+})
