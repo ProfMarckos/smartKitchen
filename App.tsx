@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 
 const alturaStatusBar = StatusBar.currentHeight
-
+const KEY_GPT = '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';
 
 export default function App() {
 
@@ -25,7 +25,11 @@ export default function App() {
     defReceita("");
     defLoad(true);
     Keyboard.dismiss();
+
+    const prompt = `Sugira uma receita para o ${ocasiao} usando os ingredientes: ${ingr1}, ${ingr2}, ${ingr3} e ${ingr4} e pesquise a receita no YouTube. Caso encontre, informe o link.`;
+
   }
+
 
 
 
