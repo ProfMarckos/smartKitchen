@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, StatusBar, ScrollView, ActivityIndicator, Alert, Keyboard } from 'react-native';
+import { Image, StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, StatusBar, ScrollView, ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react'
 
@@ -26,7 +26,7 @@ export default function App() {
     defLoad(true);
     Keyboard.dismiss();
 
-    const prompt = `Sugira uma receita para o ${ocasiao} usando os ingredientes: ${ingr1}, ${ingr2}, ${ingr3} e ${ingr4} e pesquise a receita no YouTube. Caso encontre, informe o link.`;
+    const prompt = `Sugira uma receita detalhada para o ${ocasiao} usando os ingredientes: ${ingr1}, ${ingr2}, ${ingr3} e ${ingr4} e pesquise a receita no YouTube. Caso encontre, informe o link.`;
 
     fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -47,17 +47,18 @@ export default function App() {
         top_p: 1,
       })
     })
-      .then((response) => response.json()) //receber dados em JSON
-      .then(data) //manipular os resultados
-      .catch((error) => { console.log(error); }) //em caso de erro
-      .finally(); //aplicação complementar
-
-
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data.choices[0].message.content);
+        defReceita(data.choices[0].message.content)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        defLoad(false);
+      })
   }
-
-
-
-
 
   return (
     <View style={ESTILOS.container}>
@@ -113,10 +114,10 @@ export default function App() {
         {receita && (
           <View style={ESTILOS.content}>
             <Text style={ESTILOS.title}>Sua receita 👇</Text>
+            <Text style={{ lineHeight: 24 }}>{receita} </Text>
           </View>
         )}
       </ScrollView>
-
     </View>
   );
 }
@@ -186,5 +187,4 @@ const ESTILOS = StyleSheet.create({
     width: '90%',
     marginTop: 8,
   }
-
 })
