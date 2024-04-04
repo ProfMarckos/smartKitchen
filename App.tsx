@@ -1,10 +1,10 @@
-import { Image, StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, StatusBar, ScrollView, ActivityIndicator, Alert, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, StatusBar, ScrollView, ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react'
 
 
 const alturaStatusBar = StatusBar.currentHeight
-const KEY_GPT = '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';
+const KEY_GPT = 'SUA_CHAVE_DE_API';
 
 export default function App() {
 
